@@ -1,9 +1,19 @@
 #!/bin/bash
 
 # Define Nexus Configuration
-NEXUS_BASE=
+NEXUS_BASE= #This is your nexus url.. like "http://nexus.local"
 REST_PATH=/service/local
 ART_REDIR=/artifact/maven/redirect
+
+##############################################################
+#### EXAMPLE :
+####
+#### bash download-artifact-from-nexus.sh -r snapshots 
+####        -a com.company.application:artifact:LATEST 
+####        -o /tmp/output.jar
+#### 
+####
+##############################################################
 
 usage()
 {
