@@ -17,4 +17,5 @@ bash download-artifact-from-nexus.sh -r snapshots -a se.r2m.stockmarket.market:s
 
 # Updates slaves (dont edit)
 
-puppet kick
+#puppet kick --all
+puppet apply /etc/puppet/manifests/site.pp
