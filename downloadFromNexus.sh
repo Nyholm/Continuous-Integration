@@ -6,6 +6,10 @@ REST_PATH=/service/local
 ART_REDIR=/artifact/maven/redirect
 
 ##############################################################
+#### 
+#### Version: Supports resolving of "LATEST", "RELEASE" and snapshot versions ("1.0-SNAPSHOT") too. 
+####
+####
 #### EXAMPLE :
 ####
 #### bash downloadFromNexus.sh -r snapshots
@@ -43,7 +47,7 @@ GROUP_ID=
 ARTIFACT_ID=
 VERSION=
 CLASSIFIER=""
-PACKAGING=jar
+PACKAGING=war
 REPO=
 USERNAME=
 PASSWORD=
