@@ -8,7 +8,7 @@ ART_REDIR=/artifact/maven/redirect
 ##############################################################
 #### EXAMPLE :
 ####
-#### bash download-artifact-from-nexus.sh -r snapshots
+#### bash downloadFromNexus.sh -r snapshots
 ####        -a com.company.application:artifact:LATEST
 ####        -o /tmp/output.jar
 ####

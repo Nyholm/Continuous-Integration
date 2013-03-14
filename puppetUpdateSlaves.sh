@@ -13,7 +13,7 @@
 
 # Download artifacts
 
-bash download-artifact-from-nexus.sh -r snapshots -a se.r2m.stockmarket.market:stockmarket-market:LATEST -o /srv/builds/stockmarket-market.jar
+bash downloadFromNexus.sh -r snapshots -a se.r2m.stockmarket.market:stockmarket-market:LATEST -o /srv/builds/stockmarket-market.jar
 
 # Updates slaves (dont edit)
 
