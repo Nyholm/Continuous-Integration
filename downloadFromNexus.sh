@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define Nexus Configuration
-NEXUS_BASE= #This is your nexus url.. like "http://nexus.local"
+NEXUS_BASE=http://nexus.local #This is your nexus url.. change it..
 REST_PATH=/service/local
 ART_REDIR=/artifact/maven/redirect
 
@@ -149,9 +149,9 @@ then
 OUT="-o $OUTPUT"
 fi
 
-if [[ "$OUTPUT" != "" ]]
+if [[ "$VERBOSE" != "" ]]
 then
-echo "Fetching Artifact from $REDIRECT_URL..." >&2
+echo "Fetching Artifact from $REDIRECT_URL" >&2
 fi
 
 curl -sS -L ${REDIRECT_URL} ${OUT} ${AUTHENTICATION} ${VERBOSE} --location-trusted
