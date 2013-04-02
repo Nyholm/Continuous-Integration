@@ -30,7 +30,7 @@ define tomcat::deployment($repository, $groupId, $artifactId, $version, $warname
 	if ( $onlyon == $::hostname ) or ( $onlyon == false ){
 		#download form nexus
 		exec { "bash downloadFromNexus -r $repository -n http://$nexus_host -a $groupId:$artifactId:$version -o $instancedir/war/$warname.war":
-		    creates => "$instancedir/war/$warname",
+			creates => "$instancedir/war/$warname",
 			require => File[$instancedir]
 		}
 		
