@@ -17,7 +17,7 @@
 # $version may be a number, LATEST, RELEASE or "1.0-SNAPSHOT"
 # warname is the name of the link in topcat webapps folder, if excluded we use the artifactId (warname should not include ".war")
 # onlyon specifies a hostname that this artifact should be restricted to
-define tomcat::deployment($repository, $groupId, $artifactId, $version, $warname=false,$onlyon=false) {
+define tomcat::deployment($repository, $groupId, $artifactId, $version, $warname=false, $onlyon=false) {
 	
 	#set instance dir
 	$instancedir = "/opt/data/instances/$instancename"
@@ -31,15 +31,14 @@ define tomcat::deployment($repository, $groupId, $artifactId, $version, $warname
 		#download form nexus
 		exec { "bash downloadFromNexus -r $repository -n http://$nexus_host -a $groupId:$artifactId:$version -o $instancedir/war/$warname.war":
 			creates => "$instancedir/war/$warname",
-			require => File[$instancedir]
+			require => File[$instancedir],
+			before => File["$instancedir/webapps/$warname.war"]
 		}
 		
 		#make sure we create a symlink to webapps
-			file { "$instancedir/webapps/$warname.war":
-				ensure => link,
-				target => "$instancedir/war/$warname.war",
-				require => Exec["bash downloadFromNexus -r $repository -n http://$nexus_host -a $groupId:$artifactId:$version -o $instancedir/war/$warname.war"],
-			}
+		file { "$instancedir/webapps/$warname.war":
+			ensure => link,
+			target => "$instancedir/war/$warname.war"
 		}
 	}
 }
