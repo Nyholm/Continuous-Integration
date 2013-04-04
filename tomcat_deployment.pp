@@ -23,31 +23,58 @@ define tomcat::deployment($repository, $groupId, $artifactId, $version, $instanc
 	
 	#set the instancename to the artifact id if empty
 	if ( $instancename == false ){
-		$instancename = $artifactId
+		$instancename_fact=$artifactId
+	}
+	else{
+		$instancename_fact= $instancename
 	}
 	
 	#set the warname to the instancename if empty
 	if ( $warname == false ){
-		$warname = $instancename
+		$warname_fact = $instancename_fact
+	}
+	else{
+		$warname_fact = $warname
 	}
 	
+	$instancedir = "/opt/data/instances/$instancename_fact"
+	
 	#set instance dir
-	$instancedir = "/opt/data/instances/$instancename"
+	file { instancedir:
+		path => "$instancedir",
+	    ensure => "directory",
+	}
+	
+	file { instancedir_war:
+		path => "$instancedir/war",
+	    ensure => "directory",
+		require => File["instancedir"],
+	}
+	
+	file { instancedir_webapps:
+		path => "$instancedir/webapps",
+	    ensure => "directory",
+		require => File["instancedir"],
+	}
 	
 
 	if ( $onlyon == $::hostname ) or ( $onlyon == false ){
 		#download form nexus
-		exec { "bash downloadFromNexus -r $repository -n http://$nexus_host -a $groupId:$artifactId:$version -o $instancedir/war/$warname.war":
-			creates => "$instancedir/war/$warname",
-			require => File[$instancedir],
-			before => File["$instancedir/webapps/$warname.war"]
+		exec { download_war:
+			command => "/bin/bash downloadFromNexus -r $repository -n http://$nexus_host -a $groupId:$artifactId:$version -o $instancedir/war/$warname_fact.war",
+			creates => "$instancedir/war/$warname_fact",
+			require => File["instancedir_war"],
+			before => File["link_to_war"]
 		}
 		
 		#make sure we create a symlink to webapps
-		file { "$instancedir/webapps/$warname.war":
+		file { link_to_war:
+			path => "$instancedir/webapps/$warname_fact.war",
 			ensure => link,
-			target => "$instancedir/war/$warname.war"
+			target => "$instancedir/war/$warname_fact.war",
+			require => File["instancedir_webapps"],
 		}
 	}
+
 }
 
