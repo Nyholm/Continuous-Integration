@@ -1,5 +1,5 @@
 # This puppet definition uses the downloadFromNexus script to deploy artifacts to puppet clients.
-# Make sure that the downloadFromNexus is installed and executeable.
+# Make sure that the downloadFromNexus is installed and executeable on each client
 # 
 # Example usage:
 # tomcat::deployment { "some_name":
